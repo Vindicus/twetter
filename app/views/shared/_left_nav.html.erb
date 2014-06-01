@@ -4,6 +4,9 @@
       <%= content_tag :strong, current_user.name %>
     </li>
     <li>
+      <%= image_tag avatar_url(current_user) %>
+    </li>
+    <li>
       <%= content_tag :small, '@'+current_user.username %>
     </li>
     <li>

@@ -1,10 +1,16 @@
 module ApplicationHelper
+  require 'digest/md5'
   # Being the ApplicationHelper, all methods herein are available in all views.
 
   # Responsible for generating the appropriate form to follow or unfollow a user. If the
   # authenticated user is already following the user passed, an unfollow (DELETE) form
   # will be generated. Otherwise, a follow (CREATE) form will be generated.
   #
+  def avatar_url(current_user)
+    gravatar_id=Digest::MD5.hexdigest(current_user.email.downcase)
+    "http://gravatar.com/avatar/#{gravatar_id}.png?s=80"
+  end
+  
   def follow_link(user)
     follow = Follow.where(:user => current_user, :following => user)
     if follow.exists?
