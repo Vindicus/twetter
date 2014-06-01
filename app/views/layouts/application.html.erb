@@ -18,8 +18,8 @@
       <%= button_to("Sign out", destroy_user_session_path, :method => :delete, :class => 'btn btn-xs btn-link nav-sign-out') if user_signed_in? %>
     </div>
   </nav>
+  <%= notice %>
 
-  <%= notices %>
 
   <div class="container">
     <%= yield %>
