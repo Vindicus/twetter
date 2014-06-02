@@ -1,0 +1,37 @@
+  <% @twets.each do |twet| -%>
+      <li>
+        <%= content_tag :strong, twet.user.name, :class => 'pull-left text-middle' %>
+        <%= content_tag :small, "@"+twet.user.username, :class => 'text-muted pad-10 text-middle' %>
+        <%= content_tag :small, twet.created_at.strftime("%b %-d"), :class => 'text-muted text-middle pull-right' %>
+        <div class="clearfix"></div>
+        <%= content_tag :p,  twet.content.gsub(/@(?<username>(\w+))/, '<a href="'+'\k<username>'+'">@\k<username></a>').html_safe %>
+      <div class="clearfix"></div>
+      <% if can_retwett(twet) %>
+           <%= content_tag :div, :class => 'pull-right' do %>
+            <%= form_for :retwett, :url => retwetts_path, 
+                                    :method => 'POST',
+                                   :role => :form do |f| %>
+               <%= hidden_field_tag :return_to, request.original_url %>
+               <%= f.hidden_field :twet_id, :value => twet.id.to_s %>
+               <span class="glyphicon glyphicon-retweet smaller text-primary"></span>
+              <%= f.submit "Retwet", :class => 'btn btn-link smaller' %>
+             <% end %>
+          <% end %>
+       <div class="clearfix"></div>
+      <% elsif has_retwetted(twet) %>
+      <%= content_tag :div, :class => 'pull-right' do %>
+      <%= form_for :retwett, :url => retwett_path(retwett(twet).id),
+                                     :method => 'DELETE',
+                                     :role => :form do |f| %>
+      <%= hidden_field_tag :return_to, request.original_url %>
+      <span class="glyphicon glyphicon-retweet smaller text-success"></span>
+      <%= f.submit 'Retweted', :class => 'btn btn-link text-success smaller' %>
+      <% end %>
+      <% end %>
+      <div class="clearfix"></div>
+       </li>
+      <li><hr></li>
+      <% end -%>
+  <% end %>
+      </li>
+      <li><hr></li>

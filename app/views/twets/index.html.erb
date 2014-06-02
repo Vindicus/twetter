@@ -5,24 +5,12 @@
 
   <div class="panel panel-default col-md-8 text-left">
     <div class="pull-left">
-       <h4 style="font-weight:bold; color:red;">  <%= notice %></h4>
       <h4>Twets</h4>
     </div>
     <div class="clearfix"></div>
     <hr />
     <ol class="list-unstyled">
-
-      <% @twets.each do |twet| -%>
-      <li>
-        <%= content_tag :strong, twet.user.name, :class => 'pull-left text-middle' %>
-        <%= content_tag :small, "@"+twet.user.username, :class => 'text-muted pad-10 text-middle' %>
-        <%= content_tag :small, twet.created_at.strftime("%b %-d"), :class => 'text-muted text-middle pull-right' %>
-        <div class="clearfix"></div>
-        <%= content_tag :p, twet.content.gsub(/@(?<username>(\w+))/, '<a href="/\k<username>">@\k<username></a>').html_safe %>
-      </li>
-      <li><hr></li>
-      <% end -%>
+      <%= render :partial => 'twet' %>
     </ol>
   </div>
 </div>
-
